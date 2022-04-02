@@ -47,11 +47,13 @@ select Distinct GroupName
 from HumanResources.Department
 
 --Task 8
-select p.StandardCost,sum(ListPrice)SumListPrice,sum(p.StandardCost)SumCostPrice
-from Production.Product p
-join Production.ProductCostHistory ph
-on p.StandardCost=ph.StandardCost
-group by p.StandardCost
+select DocumentNode,pro.StandardCost,sum(ListPrice)SumListPrice,sum(pro.StandardCost)SumStandardCost
+from Production.ProductDocument doc
+join Production.ProductCostHistory his
+on doc.ProductID=his.ProductID
+join Production.Product pro
+on pro.StandardCost=his.StandardCost
+group by DocumentNode,pro.StandardCost
 
 --Task 9
 select datediff (YY,StartDate,EndDate) as YOR 
@@ -125,10 +127,10 @@ join Person.Address adr
 on sp.StateProvinceID=adr.StateProvinceID
 
 --Task 20
-select sum([SubTotal])SubTotal,sum([TaxAmt])TaxAmount
-from [Sales].[CountryRegionCurrency] crc
-join [Sales].[SalesTerritory] st
-on crc.[CountryRegionCode]=st.[CountryRegionCode]
-join [Sales].[SalesOrderHeader] soh
-on st.[TerritoryID]=soh.[TerritoryID]
-group by st.[TerritoryID]
+select CurrencyCode,sum(subtotal)SumOfSubtotal,TaxAmt Total
+from sales.SalesOrderHeader sh
+join Sales.SalesTerritory st
+on sh.TerritoryID = st.TerritoryID
+join Sales.CountryRegionCurrency crc
+on st.CountryRegionCode = crc.CountryRegionCode
+group by CurrencyCode,TaxAmt
