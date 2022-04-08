@@ -12,7 +12,7 @@ namespace Lynq
             Legs = 80;
             Eyes = 52;
             Animals = Eyes / 2;
-            for (i = 4;i<= Legs;i++)
+            for (i = 1;i<= Legs;i++)
             {
                 Goat = i / 4;
                 Duck = (Legs - i) / 2;
